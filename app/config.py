@@ -1,8 +1,7 @@
 """
 Central configuration for the SunGrid Cooperative Copilot.
 
-All values can be overridden via environment variables or a `.env` file
-(see `.env.example`). Nothing here should ever contain a real secret --
+All values can be overridden via environment variables or a `.env` file. Nothing here should ever contain a real secret --
 `groq_api_key` is read from the environment and never given a default.
 """
 from pathlib import Path
