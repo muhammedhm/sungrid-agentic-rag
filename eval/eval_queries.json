@@ -1,0 +1,60 @@
+[
+  {
+    "id": "ambiguous_doc_1",
+    "question": "My rooftop rebate got reversed after the fact and now there's a charge on my bill -- who handles this and how is it applied?",
+    "expect_sources_any_of": ["06_ambiguous_rebate_billing_adjustments.md"],
+    "expect_categories_any_of": ["incentive_rebate_programs", "billing_faqs"],
+    "notes": "Should surface doc 06 and ideally note it spans both rebate and billing processes."
+  },
+  {
+    "id": "ambiguous_doc_2",
+    "question": "If my installer turns out not to have been approved after I already got my rebate, what happens to my billing?",
+    "expect_sources_any_of": ["06_ambiguous_rebate_billing_adjustments.md", "02_incentive_rebate_programs.md", "07_installer_certification.md"],
+    "notes": "Cross-cutting: installer approval retroactively found false -> rebate reversal -> billing adjustment."
+  },
+  {
+    "id": "eligibility_tool_full_info",
+    "question": "Is a household at ZIP 94101, income $80,000, 5kW system, approved installer, eligible for the rooftop rebate and how much?",
+    "expect_tool_call": "check_rebate_eligibility",
+    "expect_eligible": true,
+    "notes": "All four inputs present -- agent should call the tool, not guess from prose."
+  },
+  {
+    "id": "eligibility_tool_missing_info",
+    "question": "Am I eligible for the rooftop rebate? I'm in ZIP 94101 with a 5kW system.",
+    "expect_clarifying_question": true,
+    "notes": "Missing income and installer-approval status -- agent should ask, not assume."
+  },
+  {
+    "id": "eligibility_tool_ineligible_income",
+    "question": "Household ZIP 94102, income $150,000, 4kW system, approved installer -- eligible for a rebate?",
+    "expect_tool_call": "check_rebate_eligibility",
+    "expect_eligible": false,
+    "notes": "Income exceeds the $120k threshold -- hard fail regardless of other factors."
+  },
+  {
+    "id": "cross_doc_battery",
+    "question": "Can I get the battery storage incentive without having a rooftop rebate application on file?",
+    "expect_sources_any_of": ["09_battery_storage_incentive.md", "02_incentive_rebate_programs.md"],
+    "notes": "Answer must reflect the dependency: battery add-on requires an approved rooftop rebate first."
+  },
+  {
+    "id": "cross_doc_grievance_vs_appeal",
+    "question": "I disagree with a rebate eligibility decision -- do I file a grievance or an appeal?",
+    "expect_sources_any_of": ["02_incentive_rebate_programs.md", "01_program_policies.md"],
+    "notes": "Should distinguish the Incentive Program appeals process from the general grievance procedure."
+  },
+  {
+    "id": "stale_doc_guard",
+    "question": "What are the eligibility rules and rebate treatment for the new multi-family housing tier?",
+    "expect_sources_any_of": ["05_company_updates.md"],
+    "expect_answer_contains_any_of": ["not yet finalized", "not finalized", "not yet published", "not final"],
+    "notes": "Company updates doc explicitly says not to rely on it for eligibility guidance -- agent should reflect that caveat, not invent rules."
+  },
+  {
+    "id": "out_of_scope",
+    "question": "What's the weather like in San Francisco today?",
+    "expect_out_of_scope": true,
+    "notes": "Should decline / state it's out of scope rather than hallucinating."
+  }
+]
