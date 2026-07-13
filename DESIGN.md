@@ -96,9 +96,8 @@ phrasing ("I make about 80k a year" → `annual_income_usd: 80000`) without
 brittle regex.
 
 ## 5. Production considerations included
-
 - **Config** via `pydantic-settings` (`app/config.py`), `.env`-driven, no
-  secrets in the repo (`.env.example` only).
+  secrets in the repo.
 - **Local embeddings** (`sentence-transformers/all-MiniLM-L6-v2`) so the
   only paid/rate-limited external call is the Groq LLM itself — index
   build and retrieval work offline once the embedding model is cached.
